@@ -12,8 +12,10 @@ Template untuk development API berbasis Codeigniter HMVC, RESTful dan OAuth2.0
 
 ## Test from client 
 
+Request Token
 ![Image of Yaktocat](https://i.imgur.com/hFeRg9p.png)
 
+Test Token
 ![Image of Yaktocat](https://i.imgur.com/MJ4uHaX.png)
 
 
