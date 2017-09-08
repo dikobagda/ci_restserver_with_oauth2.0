@@ -1,5 +1,5 @@
 # ci restful server with Oauth2.0
-Codeigniter 3 REST Server with Oauth2.0
+Codeigniter 3 REST Server with JWT Oauth2.0
 
 Template untuk development API berbasis Codeigniter HMVC, RESTful dan OAuth2.0
 
