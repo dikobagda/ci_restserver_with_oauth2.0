@@ -4,7 +4,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 require APPPATH . 'libraries/REST_Controller.php';
 
 class MY_Controller extends REST_Controller {
-    
+    private $couchbase_username = 'steam';
+    private $couchbase_password = 'steam1234';
+    private $couchbase_host = 'http://127.0.0.1:8091';
+
     public function _get_post_data()
     {
         if (isset($_POST))
@@ -43,6 +46,55 @@ class MY_Controller extends REST_Controller {
         return $randomString;
     }
     
+    function checkToken($access_token){
+        $oauthdb = $this->load->database('oauth', TRUE);
+        $arr = explode(" ", $access_token);
+        if ($arr[0] == 'Bearer') {
+            
+            $token = $oauthdb->get_where('oauth_access_tokens', array('access_token'=>$arr[1]));
+            if ($token->num_rows() > 0){
+                
+                $isExpired = $oauthdb->get_where('oauth_access_tokens', array('access_token'=>$arr[1], 'expires > '=> date('Y-m-d H:i:s')));
+                if ($isExpired->num_rows() > 0){
+                    return true;
+                } else {
+                    $this->response([
+                        'status' => FALSE,
+                        'status_code' => 400,
+                        'message' => 'Token has been expired!'
+                    ], REST_Controller::HTTP_BAD_REQUEST); 
+                }
+
+            } else {
+                $this->response([
+                    'status' => FALSE,
+                    'status_code' => 404,
+                    'message' => 'Authorization failed!'
+                ], REST_Controller::HTTP_NOT_FOUND); 
+            }
+
+        } else {
+            $this->response([
+                'status' => FALSE,
+                'status_code' => 400,
+                'message' => 'Bad Request, Authorization type is incorrect!'
+            ], REST_Controller::HTTP_BAD_REQUEST); 
+        }
+    }
+
+    function couchbaseOpenConn(){
+        // Establish username and password for bucket-access
+        $authenticator = new \Couchbase\PasswordAuthenticator();
+        $authenticator->username($this->couchbase_username)->password($this->couchbase_password);
+
+        // Connect to Couchbase Server
+        $cluster = new CouchbaseCluster($this->couchbase_host);
+
+        // Authenticate, then open bucket
+        $cluster->authenticate($authenticator);
+        return $cluster;
+
+    }
     
 }
 

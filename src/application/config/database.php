@@ -78,7 +78,7 @@ $db['default'] = array(
 	'hostname' => 'localhost',
 	'username' => 'root',
 	'password' => '',
-	'database' => 'ci_hmvc',
+	'database' => 'sip',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
@@ -96,11 +96,11 @@ $db['default'] = array(
 );
 
 $db['oauth'] = array(
-	'dsn'	=> 'mysql:dbname=ci_hmvc;host=127.0.0.1',
+	'dsn'	=> 'mysql:dbname=steam_api;host=127.0.0.1',
 	'hostname' => 'localhost',
 	'username' => 'root',
 	'password' => '',
-	'database' => 'ci_hmvc',
+	'database' => 'steam_api',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

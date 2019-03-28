@@ -115,7 +115,7 @@ class AccessToken implements AccessTokenInterface
     protected function generateAccessToken()
     {
         if (function_exists('mcrypt_create_iv')) {
-            $randomData = random_bytes(20);
+            $randomData = mcrypt_create_iv(20, MCRYPT_DEV_URANDOM);
             echo $randomData;
             if ($randomData !== false && strlen($randomData) === 20) {
                 return bin2hex($randomData);
